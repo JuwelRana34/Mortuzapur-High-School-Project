@@ -113,6 +113,7 @@ export default function NoticeBoard({ limit = 3 }: { limit?: number }) {
 
         {/* Mobile View All Button */}
         <div className="mt-6 sm:hidden">
+          <Link href="/notices">
           <Button
             variant="outline"
             className="w-full justify-center btn rounded group"
@@ -120,6 +121,7 @@ export default function NoticeBoard({ limit = 3 }: { limit?: number }) {
             সকল নোটিশ দেখুন
             <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Button>
+          </Link>
         </div>
       </div>
     </section>

@@ -31,7 +31,7 @@ export default async function AllNoticesPage({ searchParams }: PageProps) {
   return (
     <main className="min-h-screen w-full bg-gray-50 pt-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center md:text-left">
+        <h1 className="text-2xl md:text-3xl font-bold mb-6 text-center md:text-left text-gradient">
           সকল নোটিশ
         </h1>
         <NoticeBoardClientWrapper

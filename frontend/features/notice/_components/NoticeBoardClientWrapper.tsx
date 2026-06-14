@@ -6,6 +6,7 @@ import { formatDate } from "@/lib/DateFormater";
 import { useRouter, useSearchParams } from "next/navigation";
 import useNoticeList from "../hooks/useNoticeList";
 import { noticeSchema } from "../schema/notice.schema";
+import Modal from "@/components/shared/Modal";
 
 interface NoticeBoardClientWrapperProps {
   notices: noticeSchema[];
@@ -68,9 +69,13 @@ export default function NoticeBoardClientWrapper({
                     >
                       {formatDate(notice.createdAt)}
                     </Badge>
-                    <Button className=" py-0 sm:inline-flex group bg-secondary  rounded">
-                      বিস্তারিত দেখুন
-                    </Button>
+                    <Modal
+                      title={notice.title}
+                      description={notice.content}
+                      trigger={
+                        <span className="modal-btn"> বিস্তারিত দেখুন </span>
+                      }
+                    />
                   </div>
                 </div>
               </li>

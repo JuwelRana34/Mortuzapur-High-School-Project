@@ -6,6 +6,8 @@ export const Nav_Links = [
   { name: "হোম", href: "/" },
   { name: "About", href: "/about" },
   { name: "যোগাযোগ", href: "/contact" },
+  { name: "নোটিশ বোর্ড", href: "/notices" },
+  { name: "রেজাল্ট", href: "/results" },
 ];
 
 //app title
