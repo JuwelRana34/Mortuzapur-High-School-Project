@@ -1,54 +1,5 @@
-// "use client";
-// import { useEffect, useState } from "react";
-// import { PushNotificationManager } from "./PushNotificationManager";
 
-// function InstallPrompt() {
-//   const [isIOS, setIsIOS] = useState(false);
-//   const [isStandalone, setIsStandalone] = useState(false);
 
-//   useEffect(() => {
-//     setIsIOS(
-//       /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream,
-//     );
-
-//     setIsStandalone(window.matchMedia("(display-mode: standalone)").matches);
-//   }, []);
-
-//   if (isStandalone) {
-//     return null; // Don't show install button if already installed
-//   }
-
-//   return (
-//     <div>
-//       <h3>Install App</h3>
-//       <button>Add to Home Screen</button>
-//       {isIOS && (
-//         <p>
-//           To install this app on your iOS device, tap the share button
-//           <span role="img" aria-label="share icon">
-//             {" "}
-//             ⎋{" "}
-//           </span>
-//           and then "Add to Home Screen"
-//           <span role="img" aria-label="plus icon">
-//             {" "}
-//             ➕{" "}
-//           </span>
-//           .
-//         </p>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default function Notification() {
-//   return (
-//     <div>
-//       <PushNotificationManager />
-//       <InstallPrompt />
-//     </div>
-//   );
-// }
 
 "use client";
 import { useEffect, useState } from "react";
@@ -130,7 +81,10 @@ function InstallPrompt() {
           <span className="mx-1 inline-flex items-center justify-center p-1 bg-zinc-200 dark:bg-zinc-800 rounded">
             ⎋
           </span>
-          and then <strong className="font-medium">&quot;Add to Home Screen&quot;</strong>
+          and then{" "}
+          <strong className="font-medium">
+            &quot;Add to Home Screen&quot;
+          </strong>
           <span className="mx-1 inline-flex items-center justify-center p-1 bg-zinc-200 dark:bg-zinc-800 rounded">
             ➕
           </span>
@@ -138,6 +92,7 @@ function InstallPrompt() {
         </p>
       ) : (
         <button
+          type="button"
           onClick={handleInstallClick}
           disabled={!deferredPrompt}
           className="w-full sm:w-auto px-4 py-2.5 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 font-medium rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"

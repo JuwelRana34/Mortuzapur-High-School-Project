@@ -218,6 +218,7 @@ export function PushNotificationManager() {
               ✅ Subscribed to notifications
             </p>
             <button
+             type="button"
               onClick={unsubscribeFromPush}
               disabled={isLoading}
               className="text-sm px-3 py-1.5 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-md hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors disabled:opacity-50"
