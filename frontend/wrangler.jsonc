@@ -1,27 +1,28 @@
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"main": ".open-next/worker.js",
-	"name": "mortuzapurhighschool",
-	"compatibility_date": "2026-05-19",
-	"compatibility_flags": [
-		"nodejs_compat",
-		"global_fetch_strictly_public"
-	],
-	"assets": {
-		"directory": ".open-next/assets",
-		"binding": "ASSETS"
-	},
-	"services": [
-		{
-			// Self-reference service binding, the service name must match the worker name
-			// see https://opennext.js.org/cloudflare/caching
-			"binding": "WORKER_SELF_REFERENCE",
-			"service": "mortuzapurhighschool"
-		}
-	],
-	"images": {
-		// Enable image optimization
-		// see https://opennext.js.org/cloudflare/howtos/image
-		"binding": "IMAGES"
-	}
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "mortuzapurhighschool",
+  "compatibility_date": "2026-05-19",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+  },
+  "services": [
+    {
+      // Self-reference service binding, the service name must match the worker name
+      // see https://opennext.js.org/cloudflare/caching
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "mortuzapurhighschool",
+    },
+  ],
+  "images": {
+    // Enable image optimization
+    // see https://opennext.js.org/cloudflare/howtos/image
+    "binding": "IMAGES",
+  },
+  "vars": {
+    "NEXT_PUBLIC_VAPID_PUBLIC_KEY": "BDlBURGScka647bPisT7F-VWhhyIREe2sYG6RJ-tl3276XmLyIERTwL0fOdCwersu1OQ5mgE89HX5VGhmrLbew8",
+    "VAPID_PRIVATE_KEY": "CVqLslgOukZz5NLuwCkOfQL1IUjIj0kZtFIJLzN5PXI",
+  },
 }
