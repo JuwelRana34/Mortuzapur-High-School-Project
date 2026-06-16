@@ -73,6 +73,7 @@ function getRedis() {
     // Local dev fallback
     url = process.env.UPSTASH_REDIS_REST_URL!;
     token = process.env.UPSTASH_REDIS_REST_TOKEN!;
+    console.log("Redis credentials loaded from environment", { url, token });
   }
 
   if (!url || !token) {
@@ -88,8 +89,9 @@ function setupWebPush() {
 
   try {
     const { env } = getCloudflareContext();
-    publicKey = env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+    publicKey = env.VAPID_PUBLIC_KEY;
     privateKey = env.VAPID_PRIVATE_KEY;
+    console.log("VAPID keys loaded from environment", { publicKey, privateKey });
   } catch {
     publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!;
     privateKey = process.env.VAPID_PRIVATE_KEY!;

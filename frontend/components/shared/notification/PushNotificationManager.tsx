@@ -95,6 +95,7 @@ import {
   subscribeUser,
   unsubscribeUser,
 } from "@/actions/action";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 export function PushNotificationManager() {
   const [isSupported, setIsSupported] = useState(false);
@@ -148,12 +149,13 @@ export function PushNotificationManager() {
 
   async function subscribeToPush() {
     setIsLoading(true);
+    const { env } = getCloudflareContext();
     try {
       const registration = await navigator.serviceWorker.ready;
       const sub = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: UrlBase64ToUint8Array(
-          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
+          env.VAPID_PUBLIC_KEY!,
         ),
       });
       setSubscription(sub);
