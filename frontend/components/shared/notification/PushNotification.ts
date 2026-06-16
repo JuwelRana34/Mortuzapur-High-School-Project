@@ -1,5 +1,3 @@
-"use client";
-
 
 export function UrlBase64ToUint8Array(base64String: string) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);

@@ -1,33 +1,107 @@
+// "use server";
+
+// import { getCloudflareContext } from "@opennextjs/cloudflare";
+// import webpush from "web-push";
+
+// export async function subscribeUser(sub: webpush.PushSubscription) {
+//    const {env} = getCloudflareContext();
+
+//   webpush.setVapidDetails(
+//     "mailto:rk370613@gmail.com",
+//     env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
+//     env.VAPID_PRIVATE_KEY!,
+//   );
+
+//   let subscription: webpush.PushSubscription | null = null;
+
+//   subscription = sub;
+//   // In a production environment, you would want to store the subscription in a database
+//   // For example: await db.subscriptions.create({ data: sub })
+//   return { success: true };
+// }
+
+// export async function unsubscribeUser() {
+//   subscription = null;
+//   // In a production environment, you would want to remove the subscription from the database
+//   // For example: await db.subscriptions.delete({ where: { ... } })
+//   return { success: true };
+// }
+
+// export async function sendNotification(message: string) {
+//   if (!subscription) {
+//     throw new Error("No subscription available");
+//   }
+
+//   try {
+//     await webpush.sendNotification(
+//       subscription,
+//       JSON.stringify({
+//         title: "Test Notification",
+//         body: message,
+//         icon: "/icon.png",
+//       }),
+//     );
+//     return { success: true };
+//   } catch (error) {
+//     console.error("Error sending push notification:", error);
+//     return { success: false, error: "Failed to send notification" };
+//   }
+// }
+
+
+
+
 "use server";
-
 import webpush from "web-push";
+import { Redis } from "@upstash/redis";
+import { getCloudflareContext } from "@opennextjs/cloudflare/cloudflare-context";
 
-webpush.setVapidDetails(
-  "mailto:rk370613@gmail.com",
-  process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
-  process.env.VAPID_PRIVATE_KEY!,
-);
+function getEnv() {
+  const { env } = getCloudflareContext();
+  return env;
+}
 
-let subscription: webpush.PushSubscription | null = null;
+function getRedis() {
+  const env = getEnv();
+  return new Redis({
+    url: env.UPSTASH_REDIS_REST_URL!,
+    token: env.UPSTASH_REDIS_REST_TOKEN!,
+  });
+}
+
+function setupWebPush() {
+  const env = getEnv();
+  webpush.setVapidDetails(
+    "mailto:rk370613@gmail.com",
+    env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
+    env.VAPID_PRIVATE_KEY!,
+  );
+}
 
 export async function subscribeUser(sub: webpush.PushSubscription) {
-  subscription = sub;
-  // In a production environment, you would want to store the subscription in a database
-  // For example: await db.subscriptions.create({ data: sub })
+  setupWebPush();
+  const redis = getRedis();
+  await redis.set("push_subscription", JSON.stringify(sub));
   return { success: true };
 }
 
 export async function unsubscribeUser() {
-  subscription = null;
-  // In a production environment, you would want to remove the subscription from the database
-  // For example: await db.subscriptions.delete({ where: { ... } })
+  const redis = getRedis();
+  await redis.del("push_subscription");
   return { success: true };
 }
 
 export async function sendNotification(message: string) {
-  if (!subscription) {
+  setupWebPush();
+  const redis = getRedis();
+
+  const subData = await redis.get<string>("push_subscription");
+  if (!subData) {
     throw new Error("No subscription available");
   }
+
+  const subscription =
+    typeof subData === "string" ? JSON.parse(subData) : subData;
 
   try {
     await webpush.sendNotification(
