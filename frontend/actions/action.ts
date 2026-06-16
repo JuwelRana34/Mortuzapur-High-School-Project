@@ -89,7 +89,7 @@ function setupWebPush() {
 
   try {
     const { env } = getCloudflareContext();
-    publicKey = env.VAPID_PUBLIC_KEY;
+    publicKey = env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
     privateKey = env.VAPID_PRIVATE_KEY;
     console.log("VAPID keys loaded from environment", { publicKey, privateKey });
   } catch {
