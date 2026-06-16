@@ -104,7 +104,7 @@ function InstallPrompt() {
   );
 }
 
-export default function Notification() {
+export default function Notification({ publicKey }: { publicKey: string }) {
   return (
     <div className="max-w-md mx-auto p-4 md:p-6 space-y-6">
       <div className="text-center mb-8">
@@ -116,7 +116,7 @@ export default function Notification() {
         </p>
       </div>
 
-      <PushNotificationManager />
+      <PushNotificationManager publicKey={publicKey} />
       <InstallPrompt />
     </div>
   );
