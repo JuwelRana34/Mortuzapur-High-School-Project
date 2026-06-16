@@ -8,12 +8,11 @@ import NoticeBoard from "@/features/notice/_components/NoticeList";
 import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 export default function Home() {
-  const { env } = getCloudflareContext();
   return (
     <>
       <HeroSection />
       <Marquee />
-      <Notification publicKey={env.NEXT_PUBLIC_VAPID_PUBLIC_KEY} />
+      <Notification />
       <HeadmasterMessage />
       <NoticeBoard limit={2} />
       <TeacherDirectory />

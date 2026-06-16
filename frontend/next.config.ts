@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  env: {
+    NEXT_PUBLIC_VAPID_PUBLIC_KEY:"BDlBURGScka647bPisT7F-VWhhyIREe2sYG6RJ-tl3276XmLyIERTwL0fOdCwersu1OQ5mgE89HX5VGhmrLbew8",
+  },
 };
 
 export default nextConfig;

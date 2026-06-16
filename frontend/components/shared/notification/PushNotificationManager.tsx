@@ -187,7 +187,7 @@ interface PushNotificationProps {
   publicKey: string;
 }
 
-export function PushNotificationManager({ publicKey }: PushNotificationProps) {
+export function PushNotificationManager() {
   const [isSupported, setIsSupported] = useState(false);
   const [subscription, setSubscription] = useState<PushSubscription | null>(
     null,
@@ -222,7 +222,7 @@ export function PushNotificationManager({ publicKey }: PushNotificationProps) {
   async function subscribeToPush() {
     setIsLoading(true);
 
-    if (!publicKey) {
+    if (!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY) {
       console.error(
         "VAPID Public Key is missing! Check your Cloudflare bindings.",
       );
@@ -235,7 +235,9 @@ export function PushNotificationManager({ publicKey }: PushNotificationProps) {
       const sub = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         // ✅ সার্ভার থেকে আসা Prop এখানে ব্যবহার করা হচ্ছে
-        applicationServerKey: UrlBase64ToUint8Array(publicKey),
+        applicationServerKey: UrlBase64ToUint8Array(
+          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
+        ),
       });
       setSubscription(sub);
 
